@@ -14,13 +14,21 @@ function pad2(value) {
 }
 
 function loadHourPreference() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored === "12") return false;
-  return true;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === "12") return false;
+    return true;
+  } catch {
+    return true; // 隐私模式/存储禁用时回退默认值
+  }
 }
 
 function saveHourPreference() {
-  localStorage.setItem(STORAGE_KEY, is24Hour ? "24" : "12");
+  try {
+    localStorage.setItem(STORAGE_KEY, is24Hour ? "24" : "12");
+  } catch {
+    // 存储失败时静默忽略
+  }
 }
 
 function formatTime(date) {
@@ -48,6 +56,7 @@ function formatDate(date) {
 
 function updateToggleText() {
   elements.formatToggle.textContent = is24Hour ? "切换到 12 小时制" : "切换到 24 小时制";
+  // aria-pressed 表示当前是否为12小时制（按下状态）
   elements.formatToggle.setAttribute("aria-pressed", String(!is24Hour));
 }
 

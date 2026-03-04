@@ -125,11 +125,17 @@ async function copyText(value, typeText) {
   }
 }
 
+function isValidHex(color) {
+  return /^#[0-9A-F]{6}$/i.test(color);
+}
+
 function loadHistory() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) return [];
+    // 过滤掉无效的HEX颜色值
+    return parsed.filter(isValidHex).slice(0, MAX_HISTORY);
   } catch {
     return [];
   }
@@ -150,7 +156,11 @@ function addToHistory(hex) {
 
 function renderHistory() {
   if (!historyColors.length) {
-    elements.history.innerHTML = '<p class="empty">暂无历史颜色</p>';
+    const emptyMsg = document.createElement("p");
+    emptyMsg.className = "empty";
+    emptyMsg.textContent = "暂无历史颜色";
+    elements.history.innerHTML = "";
+    elements.history.appendChild(emptyMsg);
     return;
   }
 

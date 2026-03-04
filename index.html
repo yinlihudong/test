@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>颜色选择器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="panel picker-panel">
+        <h1>颜色选择器</h1>
+        <p class="subtitle">拖动滑杆选择色相、饱和度、亮度</p>
+
+        <div id="preview" class="preview" aria-label="当前颜色预览"></div>
+
+        <div class="slider-group">
+          <label for="hue">色相 (H)</label>
+          <input id="hue" type="range" min="0" max="360" value="210" />
+          <span id="hueValue" class="value-badge">210°</span>
+        </div>
+
+        <div class="slider-group">
+          <label for="sat">饱和度 (S)</label>
+          <input id="sat" type="range" min="0" max="100" value="75" />
+          <span id="satValue" class="value-badge">75%</span>
+        </div>
+
+        <div class="slider-group">
+          <label for="light">亮度 (L)</label>
+          <input id="light" type="range" min="0" max="100" value="50" />
+          <span id="lightValue" class="value-badge">50%</span>
+        </div>
+      </section>
+
+      <section class="panel values-panel">
+        <h2>颜色值</h2>
+        <div class="color-values">
+          <button class="value-item" data-type="hex" title="点击复制 HEX">
+            <span class="label">HEX</span>
+            <span id="hexText" class="text">#000000</span>
+          </button>
+
+          <button class="value-item" data-type="rgb" title="点击复制 RGB">
+            <span class="label">RGB</span>
+            <span id="rgbText" class="text">rgb(0, 0, 0)</span>
+          </button>
+
+          <button class="value-item" data-type="hsl" title="点击复制 HSL">
+            <span class="label">HSL</span>
+            <span id="hslText" class="text">hsl(0, 0%, 0%)</span>
+          </button>
+        </div>
+
+        <p id="copyStatus" class="copy-status" aria-live="polite"></p>
+
+        <div class="history-block">
+          <div class="history-head">
+            <h3>历史记录</h3>
+            <button id="clearHistory" class="clear-btn" type="button">清空</button>
+          </div>
+          <div id="history" class="history-list" aria-label="颜色历史"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
